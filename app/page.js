@@ -1,14 +1,12 @@
 // app/page.js
 "use client"
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import MotivationalQuotes from '@/components/MotivationalQuotes'
 
 
 export default function Home() {
   return (         
     <>
-      <Header />
+    
       <main className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center px-6 py-20 font-sans">
         
         {/* Big Title */}
@@ -40,7 +38,7 @@ export default function Home() {
           </p>
         </div>
       </main>
-      <Footer    />
+          
     </>
   )
 }

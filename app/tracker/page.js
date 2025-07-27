@@ -1,27 +1,27 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function TrackerPage() {
-  const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
-  const [task, setTask] = useState("");
+  const todayKey = new Date().toISOString().split("T")[0];
   const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState("");
 
-  // ✅ Load today's tasks
+  // ✅ Load tasks from localStorage when page loads
   useEffect(() => {
-    const saved = localStorage.getItem(`dailyTasks-${today}`);
-    if (saved) setTasks(JSON.parse(saved));
-  }, [today]);
+    const saved = JSON.parse(localStorage.getItem(`dailyTasks-${todayKey}`)) || [];
+    setTasks(saved);
+  }, []);
 
-  // ✅ Save tasks whenever they change
+  // ✅ Save tasks to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem(`dailyTasks-${today}`, JSON.stringify(tasks));
-  }, [tasks, today]);
+    localStorage.setItem(`dailyTasks-${todayKey}`, JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = () => {
-    if (task.trim() === "") return;
-    setTasks([...tasks, { text: task, done: false }]);
-    setTask("");
+    if (!newTask.trim()) return;
+    setTasks([...tasks, { text: newTask, done: false }]);
+    setNewTask("");
   };
 
   const toggleTask = (index) => {
@@ -31,62 +31,66 @@ export default function TrackerPage() {
   };
 
   const deleteTask = (index) => {
-    setTasks(tasks.filter((_, i) => i !== index));
+    const updated = [...tasks];
+    updated.splice(index, 1);
+    setTasks(updated);
   };
-
-  const completedCount = tasks.filter((t) => t.done).length;
 
   return (
     <main className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-2">📅 Daily Task Tracker</h1>
-      <p className="text-gray-400 mb-6">{today}</p>
+      <h1 className="text-4xl font-bold mb-6">📅 Daily Tracker</h1>
 
-      {/* ✅ Progress Summary */}
-      <div className="mb-4 text-green-400 font-semibold">
-        Completed: {completedCount}/{tasks.length}
-      </div>
-
-      {/* ✅ Input */}
-      <div className="flex gap-2 w-full max-w-md mb-6">
-        <input
-          type="text"
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
-          className="flex-1 p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none"
-          placeholder="Enter a task..."
-        />
-        <button
-          onClick={addTask}
-          className="px-4 py-2 bg-green-600 rounded hover:bg-green-500"
-        >
-          Add
-        </button>
-      </div>
-
-      {/* ✅ Task List */}
-      <ul className="w-full max-w-md space-y-2">
-        {tasks.map((t, i) => (
-          <li
-            key={i}
-            className="flex justify-between items-center bg-gray-800 p-3 rounded"
+      <div className="w-full max-w-lg space-y-4">
+        {/* Input + Add Button */}
+        <div className="flex">
+          <input
+            type="text"
+            className="flex-grow p-2 rounded-l bg-gray-800 border border-gray-700 text-white"
+            placeholder="Enter a new task..."
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+          />
+          <button
+            onClick={addTask}
+            className="bg-green-500 px-4 rounded-r hover:bg-green-600"
           >
-            <span
-              onClick={() => toggleTask(i)}
-              className={`cursor-pointer ${
-                t.done ? "line-through text-gray-400" : ""
-              }`}
+            Add
+          </button>
+        </div>
+
+        {/* Task List */}
+        <ul className="space-y-2">
+          {tasks.map((task, index) => (
+            <li
+              key={index}
+              className="flex justify-between items-center bg-gray-800 p-3 rounded"
             >
-              {t.text}
-            </span>
-            <button
-              onClick={() => deleteTask(i)}
-              className="text-red-400 hover:text-red-300"
-            >
-              ✕
-            </button>
-          </li>
-        ))}
-      </ul>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  checked={task.done}
+                  onChange={() => toggleTask(index)}
+                  className="w-4 h-4"
+                />
+                <span className={task.done ? "line-through text-gray-400" : ""}>
+                  {task.text}
+                </span>
+              </div>
+              <button
+                onClick={() => deleteTask(index)}
+                className="text-red-400 hover:text-red-600"
+              >
+                ✖
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        {/* Empty State */}
+        {tasks.length === 0 && (
+          <p className="text-gray-400 text-center mt-4">No tasks yet. Add one!</p>
+        )}
+      </div>
     </main>
   );
 }
