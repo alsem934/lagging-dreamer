@@ -24,3 +24,35 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* Simple glitch effect */
+@keyframes glitch {
+  0% {
+    clip: rect(42px, 9999px, 44px, 0);
+    transform: translate(-2px, -2px);
+  }
+  20% {
+    clip: rect(10px, 9999px, 85px, 0);
+    transform: translate(2px, 2px);
+  }
+  40% {
+    clip: rect(75px, 9999px, 90px, 0);
+    transform: translate(-2px, 1px);
+  }
+  60% {
+    clip: rect(30px, 9999px, 75px, 0);
+    transform: translate(2px, -1px);
+  }
+  80% {
+    clip: rect(50px, 9999px, 55px, 0);
+    transform: translate(-2px, 2px);
+  }
+  100% {
+    clip: rect(42px, 9999px, 44px, 0);
+    transform: translate(0);
+  }
+}
+
+.glitch {
+  position: relative;
+  animation: glitch 2s infinite;
+}
