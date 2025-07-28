@@ -1,7 +1,7 @@
-// app/page.js
+// // app/page.js
 "use client"
 import MotivationalQuotes from '@/components/MotivationalQuotes'
-
+import Link from "next/link";
 
 export default function Home() {
   return (         
@@ -17,9 +17,13 @@ export default function Home() {
         
         {/* Personal Statement */}
         <p className="max-w-xl text-center text-gray-300 text-lg mb-12 leading-relaxed">
-          I chase pleasure, delay purpose. My PC fails me, yet I dream wildly. This is my truth — and I’m not done yet.
+         A simple productivity app to help you stay disciplined, track daily tasks, 
+       and achieve long-term goals — even when life feels laggy.
         </p>
-        
+         
+      <Link href="/tracker" className="px-6 py-3  mb-6 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition">
+        Start Tracking
+       </Link>
         {/* Animated Glitchy Box */}
         <div className="bg-gray-800 rounded-lg p-8 mb-12 shadow-lg w-full max-w-md text-yellow-400 font-mono text-xl tracking-wide glitch">
           “The rush never stops.”
@@ -41,4 +45,21 @@ export default function Home() {
           
     </>
   )
-}
+}  
+
+// import Link from "next/link";
+
+// export default function LandingPage() {
+//   return (
+//     <main className="min-h-screen bg-gray-900 text-white flex flex-col justify-center items-center text-center px-6">
+//       <h1 className="text-5xl font-bold mb-6">Lagging Dreamer 🚧</h1>
+//       <p className="max-w-xl text-gray-300 mb-8">
+//         A simple productivity app to help you stay disciplined, track daily tasks, 
+//         and achieve long-term goals — even when life feels laggy.
+//       </p>
+//       <Link href="/tracker" className="px-6 py-3 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition">
+//         Start Tracking
+//       </Link>
+//     </main>
+//   );
+// }
