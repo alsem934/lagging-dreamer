@@ -58,12 +58,14 @@ export default function GoalsPage() {
           onChange={(e) => setNewGoal(e.target.value)}
           className="flex-grow p-2 rounded bg-gray-800 border border-gray-700 text-white"
         />
-        <input
-          type="date"
-          value={targetDate}
-          onChange={(e) => setTargetDate(e.target.value)}
-          className="p-2 rounded bg-gray-800 border border-gray-700 text-white"
-        />
+      <input
+  type="date"
+  value={targetDate}
+  onChange={(e) => setTargetDate(e.target.value)}
+  className="p-2 rounded bg-gray-800 border border-gray-700 text-white"
+  placeholder="Pick a date"
+/>
+
         <button
           onClick={addGoal}
           className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
