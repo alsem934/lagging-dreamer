@@ -22,7 +22,7 @@ _(Add screenshots here after deployment)_
 
 ## 🔗 Live Demo
 
-_(Link will be added after deployment)_
+https://lagging-dreamer.vercel.app/
 
 ## 🛠️ Setup & Run
 
